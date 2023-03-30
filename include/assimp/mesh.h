@@ -325,15 +325,15 @@ struct aiBone {
             mName(other.mName),
             mNumWeights(other.mNumWeights),
 #ifndef ASSIMP_BUILD_NO_ARMATUREPOPULATE_PROCESS
-              mArmature(nullptr),
-              mNode(nullptr),
+            mArmature(nullptr),
+            mNode(nullptr),
 #endif
             mWeights(nullptr),
             mOffsetMatrix(other.mOffsetMatrix) {
         copyVertexWeights(other);
     }
 
-    void copyVertexWeights( const aiBone &other ) {
+    void copyVertexWeights(const aiBone &other) {
         if (other.mWeights == nullptr || other.mNumWeights == 0) {
             mWeights = nullptr;
             mNumWeights = 0;
@@ -350,7 +350,7 @@ struct aiBone {
     }
 
     //! @brief Assignment operator
-    aiBone &operator = (const aiBone &other) {
+    aiBone &operator=(const aiBone &other) {
         if (this == &other) {
             return *this;
         }
@@ -365,7 +365,7 @@ struct aiBone {
 
     /// @brief Compare operator.
     bool operator==(const aiBone &rhs) const {
-        if (mName != rhs.mName || mNumWeights != rhs.mNumWeights ) {
+        if (mName != rhs.mName || mNumWeights != rhs.mNumWeights) {
             return false;
         }
 
@@ -444,10 +444,10 @@ enum aiPrimitiveType {
      */
     aiPrimitiveType_NGONEncodingFlag = 0x10,
 
-    /**
-     * This value is not used. It is just here to force the
-     * compiler to map this enum to a 32 Bit integer.
-     */
+/**
+ * This value is not used. It is just here to force the
+ * compiler to map this enum to a 32 Bit integer.
+ */
 #ifndef SWIG
     _aiPrimitiveType_Force32Bit = INT_MAX
 #endif
@@ -467,7 +467,7 @@ enum aiPrimitiveType {
  *  The actual relationship between the time line and anim meshes is
  *  established by #aiMeshAnim, which references singular mesh attachments
  *  by their ID and binds them to a time offset.
-*/
+ */
 struct aiAnimMesh {
     /**Anim Mesh name */
     C_STRUCT aiString mName;
@@ -512,16 +512,18 @@ struct aiAnimMesh {
 
 #ifdef __cplusplus
     /// @brief  The class constructor.
-    aiAnimMesh() AI_NO_EXCEPT :
-            mVertices(nullptr),
-            mNormals(nullptr),
-            mTangents(nullptr),
-            mBitangents(nullptr),
-            mColors {nullptr},
-            mTextureCoords{nullptr},
-            mNumVertices(0),
-            mWeight(0.0f) {
+    aiAnimMesh() AI_NO_EXCEPT : mVertices(nullptr),
+                                mNormals(nullptr),
+                                mTangents(nullptr),
+                                mBitangents(nullptr),
+                                // mColors{ nullptr },
+                                // mTextureCoords{ nullptr },
+                                mNumVertices(0),
+                                mWeight(0.0f) {
         // empty
+
+        // mColors = { nullptr };
+        // mTextureCoords = { nullptr };
     }
 
     /// @brief The class destructor.
@@ -607,8 +609,8 @@ enum aiMorphingMethod {
     aiMorphingMethod_MORPH_RELATIVE = 0x3,
 
 /** This value is not used. It is just here to force the
-     *  compiler to map this enum to a 32 Bit integer.
-     */
+ *  compiler to map this enum to a 32 Bit integer.
+ */
 #ifndef SWIG
     _aiMorphingMethod_Force32Bit = INT_MAX
 #endif
@@ -658,7 +660,7 @@ struct aiMesh {
 
     /**
      * @brief Vertex positions.
-     * 
+     *
      * This array is always present in a mesh. The array is
      * mNumVertices in size.
      */
@@ -666,7 +668,7 @@ struct aiMesh {
 
     /**
      * @brief Vertex normals.
-     * 
+     *
      * The array contains normalized vectors, nullptr if not present.
      * The array is mNumVertices in size. Normals are undefined for
      * point and line primitives. A mesh consisting of points and
@@ -690,7 +692,7 @@ struct aiMesh {
 
     /**
      * @brief Vertex tangents.
-     * 
+     *
      * The tangent of a vertex points in the direction of the positive
      * X texture axis. The array contains normalized vectors, nullptr if
      * not present. The array is mNumVertices in size. A mesh consisting
@@ -706,7 +708,7 @@ struct aiMesh {
 
     /**
      * @brief Vertex bitangents.
-     * 
+     *
      * The bitangent of a vertex points in the direction of the positive
      * Y texture axis. The array contains normalized vectors, nullptr if not
      * present. The array is mNumVertices in size.
@@ -717,7 +719,7 @@ struct aiMesh {
 
     /**
      * @brief Vertex color sets.
-     * 
+     *
      * A mesh may contain 0 to #AI_MAX_NUMBER_OF_COLOR_SETS vertex
      * colors per vertex. nullptr if not present. Each array is
      * mNumVertices in size if present.
@@ -726,7 +728,7 @@ struct aiMesh {
 
     /**
      * @brief Vertex texture coordinates, also known as UV channels.
-     * 
+     *
      * A mesh may contain 0 to AI_MAX_NUMBER_OF_TEXTURECOORDS per
      * vertex. nullptr if not present. The array is mNumVertices in size.
      */
@@ -734,7 +736,7 @@ struct aiMesh {
 
     /**
      * @brief Specifies the number of components for a given UV channel.
-     * 
+     *
      * Up to three channels are supported (UVW, for accessing volume
      * or cube maps). If the value is 2 for a given channel n, the
      * component p.z of mTextureCoords[n][p] is set to 0.0f.
@@ -745,7 +747,7 @@ struct aiMesh {
 
     /**
      * @brief The faces the mesh is constructed from.
-     * 
+     *
      * Each face refers to a number of vertices by their indices.
      * This array is always present in a mesh, its size is given
      *  in mNumFaces. If the #AI_SCENE_FLAGS_NON_VERBOSE_FORMAT
@@ -754,13 +756,13 @@ struct aiMesh {
     C_STRUCT aiFace *mFaces;
 
     /**
-    * The number of bones this mesh contains. Can be 0, in which case the mBones array is nullptr.
-    */
+     * The number of bones this mesh contains. Can be 0, in which case the mBones array is nullptr.
+     */
     unsigned int mNumBones;
 
     /**
      * @brief The bones of this mesh.
-     * 
+     *
      * A bone consists of a name by which it can be found in the
      * frame hierarchy and a set of vertex weights.
      */
@@ -768,7 +770,7 @@ struct aiMesh {
 
     /**
      * @brief The material used by this mesh.
-     * 
+     *
      * A mesh uses only a single material. If an imported model uses
      * multiple materials, the import splits up the mesh. Use this value
      * as index into the scene's material list.
@@ -834,9 +836,9 @@ struct aiMesh {
               mNormals(nullptr),
               mTangents(nullptr),
               mBitangents(nullptr),
-              mColors{nullptr},
-              mTextureCoords{nullptr},
-              mNumUVComponents{0},
+              //   mColors{ nullptr },
+              //   mTextureCoords{ nullptr },
+              //   mNumUVComponents{ 0 },
               mFaces(nullptr),
               mNumBones(0),
               mBones(nullptr),
@@ -911,7 +913,7 @@ struct aiMesh {
     }
 
     //! @brief Check whether the mesh contains tangent and bitangent vectors.
-    //! 
+    //!
     //! It is not possible that it contains tangents and no bitangents
     //! (or the other way round). The existence of one of them
     //! implies that the second is there, too.
@@ -927,7 +929,7 @@ struct aiMesh {
         if (index >= AI_MAX_NUMBER_OF_COLOR_SETS) {
             return false;
         }
-        return mColors[index] != nullptr && mNumVertices > 0;        
+        return mColors[index] != nullptr && mNumVertices > 0;
     }
 
     //! @brief Check whether the mesh contains a texture coordinate set
@@ -987,7 +989,8 @@ struct aiMesh {
 
         if (mTextureCoordsNames == nullptr) {
             // Construct and null-init array
-            mTextureCoordsNames = new aiString *[AI_MAX_NUMBER_OF_TEXTURECOORDS] {};
+            // mTextureCoordsNames = new aiString *[AI_MAX_NUMBER_OF_TEXTURECOORDS] {};
+            mTextureCoordsNames = new aiString *[AI_MAX_NUMBER_OF_TEXTURECOORDS];
         }
 
         if (texCoordsName.length == 0) {
@@ -1036,7 +1039,6 @@ struct aiMesh {
 struct aiSkeletonBone {
     /// The parent bone index, is -1 one if this bone represents the root bone.
     int mParent;
-
 
 #ifndef ASSIMP_BUILD_NO_ARMATUREPOPULATE_PROCESS
     /// @brief The bone armature node - used for skeleton conversion
@@ -1162,4 +1164,3 @@ struct aiSkeleton {
 #endif //! extern "C"
 
 #endif // AI_MESH_H_INC
-
